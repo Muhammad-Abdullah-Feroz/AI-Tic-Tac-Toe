@@ -76,11 +76,86 @@ char checkWinner()
     return EMPTY;
 }
 
+void playP2P(){
+    initBoard();
+    // drawBoard();
 
+    while(true){
+        int row, col , move;
+        char winner = EMPTY;
+        while(true){
+            system("cls");
+            cout<<"Player 1 : O , Player 2 : X"<<endl;
+            cout<<"Player 1's turn (O)";
+            drawBoard();
+            cout <<endl<< "Enter your move (1-9): ";
+            cin >> move;
+            if (move < 1 || move > 9)
+            {
+                cout << "Invalid move. Try again." << endl;
+                continue;
+            }
+            row = (move - 1) / 3;
+            col = (move - 1) % 3;
+            if (board[row][col] != EMPTY)
+            {
+                cout << "Invalid move. Try again." << endl;
+                continue;
+            }
+            board[row][col] = P1;
+            break;
+        }
+        winner = checkWinner();
+        if (winner != EMPTY)
+        {
+            system("cls");
+            cout <<endl<< "Player 1 wins!" << endl;
+            drawBoard();
+            break;
+        }
+
+        while(true){
+            system("cls");
+            cout<<"Player 1 : O , Player 2 : X"<<endl;
+            cout<<"Player 2's turn (X)";
+            drawBoard();
+            cout<<endl<<"Enter your move : ";
+            cin >> move;
+            if (move < 1 || move > 9)
+            {
+                cout << "Invalid move. Try again." << endl;
+                continue;
+            }
+            row = (move - 1) / 3;
+            col = (move - 1) % 3;
+            if (board[row][col] != EMPTY)
+            {
+                cout << "Invalid move. Try again." << endl;
+                continue;
+            }
+            board[row][col] = P2;
+            break;
+        }
+        winner = checkWinner();
+        if (winner != EMPTY)
+        {
+            system("cls");
+            cout <<endl<< "Player 2 wins!" << endl;
+            drawBoard();
+            break;
+        }
+        if (!isMoveLeft()){
+            system("cls");
+            drawBoard();
+            cout <<endl<< "It's a draw!" << endl;
+            break;
+        }
+    }
+}
 
 int main()
 {
-
+    playP2P();
     _getch();
     return 0;
 }
