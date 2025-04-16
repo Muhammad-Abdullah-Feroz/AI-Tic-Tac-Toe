@@ -153,6 +153,45 @@ void playP2P(){
     }
 }
 
+
+void menu(){
+    char choice;
+    do{
+        cout<<"1. Player vs Player\n2. Player vs AI\n3. Exit\n";
+        cout<<"Select your choice: ";
+        choice=getche();
+        cout<<"\n\n";
+        if(choice == '1'){
+            cout<<"Player vs Player\n";	
+            cout<<"Tic-Tac-Toe (P1 = O, P2 = X)\n";
+            cout<<"Press any key to start...\n";
+            getch();
+            system("cls");
+            playP2P();
+        }else if(choice == '2'){
+            cout<<"Player vs AI\n";
+            cout<<"Tic-Tac-Toe (You = O, AI = X)\n";
+            cout<<"Press any key to start...\n";
+            getch();
+            system("cls");
+            // call AI menu
+            // menuAI();
+        }else if (choice == '3'){
+            cout<<"Exiting the game...\n";
+            cout<<"Thank you for playing!\n";
+            cout<<"Press any key to exit...\n";
+            getch();
+            exit(0);
+        }else{
+            cout<<"Invalid choice. Please try again.\n";
+            cout<<"Press any key to continue...\n";
+            getch();
+            system("cls");
+        }
+    }while(true);
+}
+
+
 int main()
 {
     playP2P();
