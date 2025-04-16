@@ -1,5 +1,6 @@
 #include <iostream>
 #include <conio.h>
+#include <limits>
 #include <Windows.h>
 
 using namespace std;
@@ -196,6 +197,8 @@ void playGame(char difficulty) {
             break;
         }
     }
+    getch(); 
+    system("cls"); 
 }
 
 void playP2P(){
@@ -273,12 +276,15 @@ void playP2P(){
             break;
         }
     }
+    getch();
+    system("cls");
 }
 
 
 void menuAI(){
     char choice;
     do{
+        system("cls");
         cout << "1. For Easy Play\n2. For Hard Play\n3. For Exit\n";
         cout << "Select AI diffculty level: ";\
         choice=getche();
@@ -317,6 +323,7 @@ void menuAI(){
 void menu(){
     char choice;
     do{
+        system("cls");
         cout<<"1. Player vs Player\n2. Player vs AI\n3. Exit\n";
         cout<<"Select your choice: ";
         choice=getche();
@@ -335,7 +342,7 @@ void menu(){
             getch();
             system("cls");
             // call AI menu
-            // menuAI();
+            menuAI();
         }else if (choice == '3'){
             cout<<"Exiting the game...\n";
             cout<<"Thank you for playing!\n";
@@ -354,7 +361,7 @@ void menu(){
 
 int main()
 {
-    playP2P();
+    menu();
     _getch();
     return 0;
 }
