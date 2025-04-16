@@ -1,5 +1,6 @@
 #include <iostream>
 #include <conio.h>
+#include <Windows.h>
 
 using namespace std;
 
@@ -134,6 +135,68 @@ pair<int, int> bestMove() {
     return move;
 }
 
+void playGame(char difficulty) {
+    initBoard();
+    drawBoard();
+
+    while (true) {
+        // Human move
+        int row, col;
+        int rowCol;
+        cout << "Enter your move (row and col: (1-9)): ";
+        cin >> rowCol;
+        if(rowCol < 1 || rowCol > 9){
+            cout << "Invalid input. Please enter a number between 1 and 9.\n";
+            continue;
+        }
+        row = (rowCol - 1) / 3;
+        col = (rowCol - 1) % 3;
+        if (board[row][col] != EMPTY) {
+            cout << "Invalid move. Try again.\n";
+            continue;
+        }
+        board[row][col] = P1;
+        
+        system("cls"); // Clear the console screen
+        cout << "Tic-Tac-Toe (You = O, AI = X)\n";
+        drawBoard();
+
+        
+        if (checkWinner() == P1) {
+            cout << "You win!\n";
+            break;
+        }
+        if (!isMoveLeft()) {
+            cout << "It's a tie!\n";
+            break;
+        }
+        
+        cout<<"AI is thinking...\n";
+        Sleep(1000);
+        // AI move
+        if(difficulty == 'H'){
+            auto [aiRow, aiCol] = bestMove();
+            board[aiRow][aiCol] = P2;
+        }
+        else{
+            auto[aiRow , aiCol] = randomMove();
+            board[aiRow][aiCol] = P2;
+        }
+        
+        system("cls"); // Clear the console screen
+        cout << "Tic-Tac-Toe (You = O, AI = X)\n";
+        drawBoard();
+
+        if (checkWinner() == P2) {
+            cout << "AI wins!\n";
+            break;
+        }
+        if (!isMoveLeft()) {
+            cout << "It's a tie!\n";
+            break;
+        }
+    }
+}
 
 void playP2P(){
     initBoard();
