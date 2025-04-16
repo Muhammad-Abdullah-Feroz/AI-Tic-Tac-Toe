@@ -76,6 +76,65 @@ char checkWinner()
     return EMPTY;
 }
 
+int minimax(bool isMax) {
+    char winner = checkWinner();
+    if (winner == P2) return 1;
+    if (winner == P1) return -1;
+    if (!isMoveLeft()) return 0;
+
+    int best;
+    if (isMax) {
+        best = numeric_limits<int>::min();
+        for (int i = 0; i < 3; ++i)
+            for (int j = 0; j < 3; ++j)
+                if (board[i][j] == EMPTY) {
+                    board[i][j] = P2;
+                    best = max(best, minimax(false));
+                    board[i][j] = EMPTY;
+                }
+    } else {
+        best = numeric_limits<int>::max();
+        for (int i = 0; i < 3; ++i)
+            for (int j = 0; j < 3; ++j)
+                if (board[i][j] == EMPTY) {
+                    board[i][j] = P1;
+                    best = min(best, minimax(true));
+                    board[i][j] = EMPTY;
+                }
+    }
+    return best;
+}
+
+pair<int, int> randomMove() {
+    cout<<"AI is playing easy mode...\n";
+    int row, col;
+    do {
+        row = rand() % 3;
+        col = rand() % 3;
+        cout<<row<<col<<endl;
+    } while (board[row][col] != EMPTY);
+    return {row, col};
+}
+
+pair<int, int> bestMove() {
+    int bestVal = numeric_limits<int>::min();
+    pair<int, int> move = {-1, -1};
+
+    for (int i = 0; i < 3; ++i)
+        for (int j = 0; j < 3; ++j)
+            if (board[i][j] == EMPTY) {
+                board[i][j] = P2;
+                int moveVal = minimax(false);
+                board[i][j] = EMPTY;
+                if (moveVal > bestVal) {
+                    move = {i, j};
+                    bestVal = moveVal;
+                }
+            }
+    return move;
+}
+
+
 void playP2P(){
     initBoard();
     // drawBoard();
@@ -151,6 +210,44 @@ void playP2P(){
             break;
         }
     }
+}
+
+
+void menuAI(){
+    char choice;
+    do{
+        cout << "1. For Easy Play\n2. For Hard Play\n3. For Exit\n";
+        cout << "Select AI diffculty level: ";\
+        choice=getche();
+        cout << "\n\n";
+        if(choice== '1'){
+            cout << "Tic-Tac-Toe (You = O, AI = X)\n";
+            cout << "AI is playing easy mode...\n";
+            cout << "Press any key to start...\n";
+            getch();
+            system("cls");
+            playGame('E');
+        }
+        else if(choice == '2'){
+            cout << "Tic-Tac-Toe (You = O, AI = X)\n";
+            cout << "AI is playing hard mode...\n";
+            cout << "Press any key to start...\n";
+            getch();
+            system("cls");
+            playGame('H');
+        }else if(choice == '3'){
+            cout << "Exiting the game...\n";
+            cout << "Thank you for playing!\n";
+            cout << "Press any key to exit...\n";
+            getch();
+            exit(0);
+        }else{
+            cout << "Invalid choice. Please try again.\n";
+            cout<<"Press any key to continue...\n";
+            getch();
+            system("cls");
+        }
+    }while(true);
 }
 
 
